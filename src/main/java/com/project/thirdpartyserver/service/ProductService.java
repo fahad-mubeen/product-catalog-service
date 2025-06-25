@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductService implements IProductService {
 
     private final IProductGateway productGateway;
-    public ProductService(@Qualifier("fakestoreProductGateway") IProductGateway productGateway) {
+    public ProductService(@Qualifier("dummyJSONProductGateway") IProductGateway productGateway) {
         this.productGateway = productGateway;
     }
 
