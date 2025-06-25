@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Component("dummyJSONProductGateway")
 public class DummyJSONProductGateway implements IProductGateway {
 
     private final DummyJSONProductAPI dummyJSONProductAPI;
