@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("dummyJSONProductGateway")
-public class DummyJSONProductGateway implements IProductGateway {
+public class DummyJSONProductGateway_Retrofit implements IProductGateway {
 
     private final DummyJSONProductAPI dummyJSONProductAPI;
-    public DummyJSONProductGateway(DummyJSONProductAPI dummyJSONProductAPI) {
+    public DummyJSONProductGateway_Retrofit(DummyJSONProductAPI dummyJSONProductAPI) {
         this.dummyJSONProductAPI = dummyJSONProductAPI;
     }
     @Override

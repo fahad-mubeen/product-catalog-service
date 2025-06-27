@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("fakestoreProductGateway")
-public class FakestoreProductGateway implements IProductGateway {
+public class FakestoreProductGateway_Retrofit implements IProductGateway {
 
     private final FakestoreProductAPI fakestoreProductAPI;
-    public FakestoreProductGateway(FakestoreProductAPI fakestoreProductAPI) {
+    public FakestoreProductGateway_Retrofit(FakestoreProductAPI fakestoreProductAPI) {
         this.fakestoreProductAPI = fakestoreProductAPI;
     }
 
