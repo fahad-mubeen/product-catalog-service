@@ -42,4 +42,18 @@ public class DummyJSONProductGateway_Retrofit implements IProductGateway {
 
         return productDTOList;
     }
+
+    @Override
+    public ProductDTO getProductById(Long id) throws IOException {
+        DummyJSONProductDTO dummyJSONProductDTO = this.dummyJSONProductAPI.getProductById(id).execute().body();
+
+        if (dummyJSONProductDTO == null) {
+            throw new IOException("Failed to fetch product with ID " + id + " from DummyJSON API");
+        }
+
+        return ProductDTO.builder()
+                .id(dummyJSONProductDTO.getId())
+                .name(dummyJSONProductDTO.getTitle())
+                .build();
+    }
 }

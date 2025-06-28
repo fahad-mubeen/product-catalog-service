@@ -12,12 +12,17 @@ import java.util.List;
 public class ProductService implements IProductService {
 
     private final IProductGateway productGateway;
-    public ProductService(@Qualifier("dummyJSONProductGateway") IProductGateway productGateway) {
+    public ProductService(@Qualifier("fakestoreProductGateway") IProductGateway productGateway) {
         this.productGateway = productGateway;
     }
 
     @Override
     public List<ProductDTO> getAllProducts() throws IOException {
         return this.productGateway.getAllProducts();
+    }
+
+    @Override
+    public ProductDTO getProductById(Long id) throws IOException {
+        return this.productGateway.getProductById(id);
     }
 }

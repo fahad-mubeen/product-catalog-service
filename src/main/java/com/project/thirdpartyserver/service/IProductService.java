@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IProductService {
     List<ProductDTO> getAllProducts() throws IOException;
+
+    ProductDTO getProductById(Long id) throws IOException;
 }

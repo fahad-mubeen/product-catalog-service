@@ -4,6 +4,7 @@ import com.project.thirdpartyserver.dto.ProductDTO;
 import com.project.thirdpartyserver.service.IProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +31,14 @@ public class ProductController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(productDTOList);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) throws IOException {
+        ProductDTO productDTO = this.productService.getProductById(id);
+        if(productDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(productDTO);
     }
 }

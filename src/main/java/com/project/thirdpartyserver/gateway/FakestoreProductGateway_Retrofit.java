@@ -1,7 +1,8 @@
 package com.project.thirdpartyserver.gateway;
 
 import com.project.thirdpartyserver.dto.FakestoreProductDTO;
-import com.project.thirdpartyserver.dto.FakestoreProductWrapperDTO;
+import com.project.thirdpartyserver.dto.FakestoreAllProductWrapperDTO;
+import com.project.thirdpartyserver.dto.FakestoreSingleProductWrapperDTO;
 import com.project.thirdpartyserver.dto.ProductDTO;
 import com.project.thirdpartyserver.gateway.api.FakestoreProductAPI;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class FakestoreProductGateway_Retrofit implements IProductGateway {
 
     @Override
     public List<ProductDTO> getAllProducts() throws IOException {
-        FakestoreProductWrapperDTO fakestoreProductWrapperDTO = this.fakestoreProductAPI.getAllProducts().execute().body();
+        FakestoreAllProductWrapperDTO fakestoreProductWrapperDTO = this.fakestoreProductAPI.getAllProducts().execute().body();
         if (fakestoreProductWrapperDTO == null) {
             throw new IOException("Failed to fetch products from Fakestore API");
         }
@@ -40,5 +41,21 @@ public class FakestoreProductGateway_Retrofit implements IProductGateway {
         }
 
         return productDTOList;
+    }
+
+    @Override
+    public ProductDTO getProductById(Long id) throws IOException {
+        FakestoreSingleProductWrapperDTO fakestoreProductDTO = this.fakestoreProductAPI.getProductById(id).execute().body();
+        if (fakestoreProductDTO == null) {
+            throw new IOException("Failed to fetch product with ID " + id + " from Fakestore API");
+        }
+        FakestoreProductDTO product = fakestoreProductDTO.getProduct();
+        if (product == null) {
+            throw new IOException("Product with ID " + id + " not found in API response");
+        }
+        return ProductDTO.builder()
+                .id((long) product.getId())
+                .name(product.getTitle())
+                .build();
     }
 }
