@@ -12,5 +12,5 @@ import java.util.List;
 public class FakestoreCategoryDTO {
     private String status;
     private String message;
-    private List<CategoryDTO> categories;
+    private List<String> categories;
 }
