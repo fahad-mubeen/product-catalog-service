@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.dto.FakestoreCategoryDTO;
+import com.project.thirdpartyserver.mapper.CategoryMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -42,11 +43,7 @@ public class FakestoreCategoryGateway_OKHTTP implements ICategoryGateway {
             Gson gson = new Gson();
             FakestoreCategoryDTO fakestoreCategoryDTO = gson.fromJson(jsonString, FakestoreCategoryDTO.class);
 
-            List<CategoryDTO> dtoList = new ArrayList<>();
-            for (String name : fakestoreCategoryDTO.getCategories()) {
-                dtoList.add(new CategoryDTO(name));
-            }
-            return dtoList;
+            return CategoryMapper.mapToCategoryDTOList(fakestoreCategoryDTO);
         } catch (Exception e) {
             throw new RuntimeException("Error fetching categories", e);
         }

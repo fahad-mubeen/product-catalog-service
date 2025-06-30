@@ -5,6 +5,7 @@ import com.project.thirdpartyserver.dto.FakestoreAllProductWrapperDTO;
 import com.project.thirdpartyserver.dto.FakestoreSingleProductWrapperDTO;
 import com.project.thirdpartyserver.dto.ProductDTO;
 import com.project.thirdpartyserver.gateway.api.FakestoreProductAPI;
+import com.project.thirdpartyserver.mapper.ProductMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -26,21 +27,7 @@ public class FakestoreProductGateway_Retrofit implements IProductGateway {
             throw new IOException("Failed to fetch products from Fakestore API");
         }
 
-        List<FakestoreProductDTO> fakestoreProductList = fakestoreProductWrapperDTO.getProducts();
-        if (fakestoreProductList == null) {
-            throw new IOException("Products list is null in API response");
-        }
-
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (FakestoreProductDTO fakestoreProduct : fakestoreProductList) {
-            ProductDTO productDTO = ProductDTO.builder()
-                    .id((long) fakestoreProduct.getId())
-                    .name(fakestoreProduct.getTitle())
-                    .build();
-            productDTOList.add(productDTO);
-        }
-
-        return productDTOList;
+        return ProductMapper.mapToProductDTOList(fakestoreProductWrapperDTO);
     }
 
     @Override
@@ -49,13 +36,6 @@ public class FakestoreProductGateway_Retrofit implements IProductGateway {
         if (fakestoreProductDTO == null) {
             throw new IOException("Failed to fetch product with ID " + id + " from Fakestore API");
         }
-        FakestoreProductDTO product = fakestoreProductDTO.getProduct();
-        if (product == null) {
-            throw new IOException("Product with ID " + id + " not found in API response");
-        }
-        return ProductDTO.builder()
-                .id((long) product.getId())
-                .name(product.getTitle())
-                .build();
+        return ProductMapper.mapToProductDTO(fakestoreProductDTO);
     }
 }

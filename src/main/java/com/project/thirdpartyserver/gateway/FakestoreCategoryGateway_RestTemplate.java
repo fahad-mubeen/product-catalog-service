@@ -2,6 +2,7 @@ package com.project.thirdpartyserver.gateway;
 
 import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.dto.FakestoreCategoryDTO;
+import com.project.thirdpartyserver.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -27,10 +28,7 @@ public class FakestoreCategoryGateway_RestTemplate implements ICategoryGateway {
         if (fakestoreCategoryDTO == null || fakestoreCategoryDTO.getCategories() == null) {
             throw new RuntimeException("Failed to fetch categories or categories are empty");
         }
-        List<CategoryDTO> dtoList = new ArrayList<>();
-        for (String name : fakestoreCategoryDTO.getCategories()) {
-            dtoList.add(new CategoryDTO(name));
-        }
-        return dtoList;
+
+        return CategoryMapper.mapToCategoryDTOList(fakestoreCategoryDTO);
     }
 }
