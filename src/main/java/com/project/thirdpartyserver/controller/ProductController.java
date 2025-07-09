@@ -2,6 +2,7 @@ package com.project.thirdpartyserver.controller;
 
 import com.project.thirdpartyserver.dto.ProductDTO;
 import com.project.thirdpartyserver.service.IProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ import java.util.List;
 public class ProductController {
 
     private final IProductService productService;
-    public ProductController(IProductService productService) {
+    public ProductController(@Qualifier("thirdPartyProductService") IProductService productService) {
         this.productService = productService;
     }
 

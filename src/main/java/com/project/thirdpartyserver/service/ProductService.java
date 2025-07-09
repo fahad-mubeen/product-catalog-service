@@ -1,28 +1,39 @@
 package com.project.thirdpartyserver.service;
 
 import com.project.thirdpartyserver.dto.ProductDTO;
-import com.project.thirdpartyserver.gateway.IProductGateway;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.project.thirdpartyserver.entity.Product;
+import com.project.thirdpartyserver.mapper.ProductMapper;
+import com.project.thirdpartyserver.repository.ProductRepository;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
-@Service
+@Service("productService")
 public class ProductService implements IProductService {
 
-    private final IProductGateway productGateway;
-    public ProductService(@Qualifier("fakestoreProductGateway") IProductGateway productGateway) {
-        this.productGateway = productGateway;
+    private final ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @Override
     public List<ProductDTO> getAllProducts() throws IOException {
-        return this.productGateway.getAllProducts();
+        List<Product> products = productRepository.findAll();
+        return ProductMapper.mapToProductDTOList(products);
     }
 
     @Override
     public ProductDTO getProductById(Long id) throws IOException {
-        return this.productGateway.getProductById(id);
+        Product product = productRepository.findById(id)
+                        .orElseThrow(() -> new IOException("Product not found with ID: " + id));
+
+        return ProductMapper.mapToProductDTO(product);
+    }
+
+    @Override
+    public ProductDTO createProduct(ProductDTO productDTO) throws IOException {
+        return null;
     }
 }

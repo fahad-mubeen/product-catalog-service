@@ -1,6 +1,7 @@
 package com.project.thirdpartyserver.mapper;
 
 import com.project.thirdpartyserver.dto.*;
+import com.project.thirdpartyserver.entity.Product;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class ProductMapper {
             ProductDTO productDTO = ProductDTO.builder()
                     .id((long) fakestoreProduct.getId())
                     .name(fakestoreProduct.getTitle())
+                    .categoryId(-1L) // Fakestore does not provide category ID in the product list
                     .build();
             productDTOList.add(productDTO);
         }
@@ -37,6 +39,21 @@ public class ProductMapper {
             ProductDTO productDTO = ProductDTO.builder()
                     .id(dummyJSONProduct.getId())
                     .name(dummyJSONProduct.getTitle())
+                    .categoryId(-1L) // DummyJSON does not provide category ID
+                    .build();
+            productDTOList.add(productDTO);
+        }
+
+        return productDTOList;
+    }
+
+    public static List<ProductDTO> mapToProductDTOList(List<Product> productList) throws IOException {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : productList) {
+            ProductDTO productDTO = ProductDTO.builder()
+                    .id(product.getId())
+                    .name(product.getName())
+                    .categoryId(product.getCategory().getId())
                     .build();
             productDTOList.add(productDTO);
         }
@@ -53,6 +70,7 @@ public class ProductMapper {
         return ProductDTO.builder()
                 .id((long) product.getId())
                 .name(product.getTitle())
+                .categoryId(-1L) // Fakestore does not provide category ID in the product details
                 .build();
     }
 
@@ -60,6 +78,15 @@ public class ProductMapper {
         return ProductDTO.builder()
                 .id(dummyJSONProductDTO.getId())
                 .name(dummyJSONProductDTO.getTitle())
+                .categoryId(-1L) // DummyJSON does not provide category ID
+                .build();
+    }
+
+    public static ProductDTO mapToProductDTO(Product product) throws IOException {
+        return ProductDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .categoryId(product.getCategory().getId())
                 .build();
     }
 }

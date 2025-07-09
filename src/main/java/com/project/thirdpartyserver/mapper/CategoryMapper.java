@@ -10,7 +10,7 @@ public class CategoryMapper {
     public static List<CategoryDTO> mapToCategoryDTOList(FakestoreCategoryDTO fakestoreCategoryDTO) {
         List<CategoryDTO> dtoList = new ArrayList<>();
         for (String name : fakestoreCategoryDTO.getCategories()) {
-            dtoList.add(new CategoryDTO(name));
+            dtoList.add(new CategoryDTO(-1L, name));
         }
         return dtoList;
     }
