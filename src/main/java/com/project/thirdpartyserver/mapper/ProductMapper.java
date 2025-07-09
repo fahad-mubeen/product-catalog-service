@@ -1,6 +1,7 @@
 package com.project.thirdpartyserver.mapper;
 
 import com.project.thirdpartyserver.dto.*;
+import com.project.thirdpartyserver.entity.Category;
 import com.project.thirdpartyserver.entity.Product;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class ProductMapper {
         return productDTOList;
     }
 
-    public static List<ProductDTO> mapToProductDTOList(List<Product> productList) throws IOException {
+    public static List<ProductDTO> mapToProductDTOList(List<Product> productList) {
         List<ProductDTO> productDTOList = new ArrayList<>();
         for (Product product : productList) {
             ProductDTO productDTO = ProductDTO.builder()
@@ -87,6 +88,13 @@ public class ProductMapper {
                 .id(product.getId())
                 .name(product.getName())
                 .categoryId(product.getCategory().getId())
+                .build();
+    }
+
+    public static Product mapToProduct(ProductDTO productDTO, Category category) throws IOException {
+        return Product.builder()
+                .name(productDTO.getName())
+                .category(category)
                 .build();
     }
 }

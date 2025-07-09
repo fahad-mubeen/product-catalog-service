@@ -1,6 +1,7 @@
 package com.project.thirdpartyserver.service;
 
 import com.project.thirdpartyserver.dto.ProductDTO;
+import com.project.thirdpartyserver.dto.ProductWithCategory_DTO;
 import com.project.thirdpartyserver.gateway.IProductGateway;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class ThirdPartyProductService implements IProductService {
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) throws IOException {
+        return null;
+    }
+
+    @Override
+    public ProductWithCategory_DTO getProductWithCategoryById(Long id) throws IOException {
         return null;
     }
 }

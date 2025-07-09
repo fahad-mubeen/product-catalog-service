@@ -1,11 +1,10 @@
 package com.project.thirdpartyserver.controller;
 
+import com.project.thirdpartyserver.dto.AllProductsOfCategoryDTO;
 import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.service.ICategoryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +23,33 @@ public class CategoryController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(categoryDTOList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDTO> getCategoryById(Long id) {
+        CategoryDTO categoryDTO = this.categoryService.getCategoryById(id);
+        if (categoryDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(categoryDTO);
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<AllProductsOfCategoryDTO> getAllProductsOfCategory(@PathVariable Long id) {
+        AllProductsOfCategoryDTO allProductsOfCategoryDTO = this.categoryService.getAllProductsOfCategory(id);
+        if (allProductsOfCategoryDTO == null) {
+            throw new RuntimeException("Category not found with ID: " + id);
+        }
+        return ResponseEntity.ok(allProductsOfCategoryDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
+        if (categoryDTO == null || categoryDTO.getName() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        CategoryDTO createdCategory = this.categoryService.createCategory(categoryDTO);
+        return ResponseEntity.status(201).body(createdCategory);
     }
 }

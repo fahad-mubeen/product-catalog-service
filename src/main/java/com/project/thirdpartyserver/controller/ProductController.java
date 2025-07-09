@@ -1,13 +1,11 @@
 package com.project.thirdpartyserver.controller;
 
 import com.project.thirdpartyserver.dto.ProductDTO;
+import com.project.thirdpartyserver.dto.ProductWithCategory_DTO;
 import com.project.thirdpartyserver.service.IProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 public class ProductController {
 
     private final IProductService productService;
-    public ProductController(@Qualifier("thirdPartyProductService") IProductService productService) {
+    public ProductController(@Qualifier("productService") IProductService productService) {
         this.productService = productService;
     }
 
@@ -41,5 +39,24 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(productDTO);
+    }
+
+    @GetMapping("/{id}/with-category")
+    ResponseEntity<ProductWithCategory_DTO> getProductWithCategoryById(@PathVariable Long id) throws IOException {
+        ProductWithCategory_DTO productWithCategoryDTO = this.productService.getProductWithCategoryById(id);
+        if (productWithCategoryDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(productWithCategoryDTO);
+    }
+
+    @PostMapping
+    ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) throws IOException {
+        if (productDTO == null || productDTO.getName() == null || productDTO.getCategoryId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        ProductDTO createdProduct = this.productService.createProduct(productDTO);
+        return ResponseEntity.status(201).body(createdProduct);
     }
 }
