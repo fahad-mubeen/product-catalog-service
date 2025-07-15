@@ -50,9 +50,4 @@ public class CategoryController {
         CategoryDTO createdCategory = this.categoryService.createCategory(categoryDTO);
         return ResponseEntity.status(201).body(createdCategory);
     }
-
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<String> handleCategoryNotFoundException(CategoryNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + " - Please check the category ID.");
-    }
 }
