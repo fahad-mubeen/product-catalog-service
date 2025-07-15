@@ -3,6 +3,8 @@ package com.project.thirdpartyserver.controller;
 import com.project.thirdpartyserver.dto.AllProductsOfCategoryDTO;
 import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.service.ICategoryService;
+import org.hibernate.annotations.NotFound;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +28,13 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryById(Long id) {
-        CategoryDTO categoryDTO = this.categoryService.getCategoryById(id);
-        if (categoryDTO == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        try {
+            CategoryDTO categoryDTO = this.categoryService.getCategoryById(id);
+            return ResponseEntity.ok(categoryDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found with ID: " + id);
         }
-        return ResponseEntity.ok(categoryDTO);
     }
 
     @GetMapping("/{id}/products")
