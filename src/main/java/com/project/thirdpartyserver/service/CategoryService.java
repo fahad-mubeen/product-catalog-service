@@ -5,6 +5,7 @@ import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.dto.ProductDTO;
 import com.project.thirdpartyserver.entity.Category;
 import com.project.thirdpartyserver.entity.Product;
+import com.project.thirdpartyserver.exception.CategoryNotFoundException;
 import com.project.thirdpartyserver.mapper.CategoryMapper;
 import com.project.thirdpartyserver.mapper.ProductMapper;
 import com.project.thirdpartyserver.repository.CategoryRepository;
@@ -30,7 +31,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public CategoryDTO getCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with ID: " + id));
+                .orElseThrow(() -> new CategoryNotFoundException(id));
         return CategoryMapper.mapToCategoryDTO(category);
     }
 

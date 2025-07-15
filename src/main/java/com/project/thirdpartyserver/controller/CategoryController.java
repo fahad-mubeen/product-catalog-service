@@ -2,12 +2,11 @@ package com.project.thirdpartyserver.controller;
 
 import com.project.thirdpartyserver.dto.AllProductsOfCategoryDTO;
 import com.project.thirdpartyserver.dto.CategoryDTO;
+import com.project.thirdpartyserver.exception.CategoryNotFoundException;
 import com.project.thirdpartyserver.service.ICategoryService;
-import org.hibernate.annotations.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -28,13 +27,9 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
-        try {
-            CategoryDTO categoryDTO = this.categoryService.getCategoryById(id);
-            return ResponseEntity.ok(categoryDTO);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found with ID: " + id);
-        }
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
+        CategoryDTO categoryDTO = this.categoryService.getCategoryById(id);
+        return ResponseEntity.ok(categoryDTO);
     }
 
     @GetMapping("/{id}/products")
@@ -54,5 +49,10 @@ public class CategoryController {
 
         CategoryDTO createdCategory = this.categoryService.createCategory(categoryDTO);
         return ResponseEntity.status(201).body(createdCategory);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<String> handleCategoryNotFoundException(CategoryNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + " - Please check the category ID.");
     }
 }
