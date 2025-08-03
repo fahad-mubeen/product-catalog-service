@@ -19,6 +19,7 @@ public class ProductMapper {
         for (FakestoreProductDTO fakestoreProduct : fakestoreProductList) {
             ProductDTO productDTO = ProductDTO.builder()
                     .id((long) fakestoreProduct.getId())
+                    .price(fakestoreProduct.getPrice())
                     .name(fakestoreProduct.getTitle())
                     .categoryId(-1L) // Fakestore does not provide category ID in the product list
                     .build();
@@ -39,6 +40,7 @@ public class ProductMapper {
         for (DummyJSONProductDTO dummyJSONProduct : dummyJSONProductList) {
             ProductDTO productDTO = ProductDTO.builder()
                     .id(dummyJSONProduct.getId())
+                    .price(dummyJSONProduct.getPrice())
                     .name(dummyJSONProduct.getTitle())
                     .categoryId(-1L) // DummyJSON does not provide category ID
                     .build();
@@ -53,6 +55,7 @@ public class ProductMapper {
         for (Product product : productList) {
             ProductDTO productDTO = ProductDTO.builder()
                     .id(product.getId())
+                    .price(product.getPrice())
                     .name(product.getName())
                     .categoryId(product.getCategory().getId())
                     .build();
@@ -70,6 +73,7 @@ public class ProductMapper {
 
         return ProductDTO.builder()
                 .id((long) product.getId())
+                .price(product.getPrice())
                 .name(product.getTitle())
                 .categoryId(-1L) // Fakestore does not provide category ID in the product details
                 .build();
@@ -78,6 +82,7 @@ public class ProductMapper {
     public static ProductDTO mapToProductDTO(DummyJSONProductDTO dummyJSONProductDTO) throws IOException {
         return ProductDTO.builder()
                 .id(dummyJSONProductDTO.getId())
+                .price(dummyJSONProductDTO.getPrice())
                 .name(dummyJSONProductDTO.getTitle())
                 .categoryId(-1L) // DummyJSON does not provide category ID
                 .build();
@@ -86,6 +91,7 @@ public class ProductMapper {
     public static ProductDTO mapToProductDTO(Product product) throws IOException {
         return ProductDTO.builder()
                 .id(product.getId())
+                .price(product.getPrice())
                 .name(product.getName())
                 .categoryId(product.getCategory().getId())
                 .build();
@@ -94,6 +100,7 @@ public class ProductMapper {
     public static Product mapToProduct(ProductDTO productDTO, Category category) throws IOException {
         return Product.builder()
                 .name(productDTO.getName())
+                .price(productDTO.getPrice())
                 .category(category)
                 .build();
     }

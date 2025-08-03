@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Builder
 public class ProductDTO {
-    Long id;
-    String name;
-    Long categoryId;
+    private Long id;
+    private double price;
+    private String name;
+    private Long categoryId;
 }
