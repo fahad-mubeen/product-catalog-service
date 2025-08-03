@@ -37,9 +37,12 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        if (categoryRepository.existsById(categoryDTO.getId())) {
-            throw new RuntimeException("Category with ID " + categoryDTO.getId() + " already exists.");
+        if (categoryRepository.existsByName(categoryDTO.getName())) {
+            throw new IllegalArgumentException(
+                    "A category with name '" + categoryDTO.getName() + "' already exists."
+            );
         }
+
         Category category = CategoryMapper.mapToCategory(categoryDTO);
         categoryRepository.save(category);
         return CategoryMapper.mapToCategoryDTO(category);
