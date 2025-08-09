@@ -44,4 +44,35 @@ public class CategorySeviceTest {
         assertEquals(2, categoryDTOs.size());
         verify(this.categoryRepository, times(1)).findAll();
     }
+
+    @Test
+    @DisplayName("should return empty list when no categories exist")
+    void getAllCategories_shouldReturnEmptyListWhenNoCategoriesExist() {
+        // Arrange
+        when(categoryRepository.findAll()).thenReturn(new ArrayList<>());
+        // Act
+        List<CategoryDTO> categoryDTOs = categoryService.getAllCategories();
+        // Assert
+        assertTrue(categoryDTOs.isEmpty());
+        verify(this.categoryRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("should create a new category successfully")
+    void createCategory_shouldCreateNewCategory() {
+        // Arrange
+        CategoryDTO categoryDTO = CategoryDTO.builder().name("New Category").build();
+        Category category = CategoryMapper.mapToCategory(categoryDTO);
+        category.setId(1L);
+        when(categoryRepository.existsByName(categoryDTO.getName())).thenReturn(false);
+        when(categoryRepository.save(any(Category.class))).thenReturn(category);
+
+        // Act
+        CategoryDTO createdCategory = categoryService.createCategory(categoryDTO);
+
+        // Assert
+        assertEquals(categoryDTO.getName(), createdCategory.getName());
+        verify(categoryRepository, times(1)).existsByName(categoryDTO.getName());
+        verify(this.categoryRepository, times(1)).save(any(Category.class));
+    }
 }
