@@ -8,6 +8,7 @@ class ThirdPartyServerApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
