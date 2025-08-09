@@ -4,6 +4,7 @@ import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.entity.Category;
 import com.project.thirdpartyserver.mapper.CategoryMapper;
 import com.project.thirdpartyserver.repository.CategoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,13 +27,26 @@ public class CategorySeviceTest {
     @InjectMocks
     private CategoryService categoryService;
 
+    private CategoryDTO categoryDTO;
+    private Category category;
+    private Category category1;
+    private Category category2;
+
+    @BeforeEach
+    void setUp() {
+        categoryDTO = CategoryDTO.builder().id(1L).name("Test Category").build();
+        category = CategoryMapper.mapToCategory(categoryDTO);
+        category.setId(1L);
+        category1 = Category.builder().id(1L).name("Category 1").build();
+        category2 = Category.builder().id(2L).name("Category 2").build();
+    }
+
+
     @Test
     @DisplayName("should return all categories successfully")
     void getAllCategories_shouldReturnAllCategories() {
         // Arrange
         List<Category> categories = new ArrayList<>();
-        Category category1 = Category.builder().id(1L).name("Category 1").build();
-        Category category2 = Category.builder().id(2L).name("Category 2").build();
         categories.add(category1);
         categories.add(category2);
         when(categoryRepository.findAll()).thenReturn(categories);
@@ -61,9 +75,6 @@ public class CategorySeviceTest {
     @DisplayName("should create a new category successfully")
     void createCategory_shouldCreateNewCategory() {
         // Arrange
-        CategoryDTO categoryDTO = CategoryDTO.builder().name("New Category").build();
-        Category category = CategoryMapper.mapToCategory(categoryDTO);
-        category.setId(1L);
         when(categoryRepository.existsByName(categoryDTO.getName())).thenReturn(false);
         when(categoryRepository.save(any(Category.class))).thenReturn(category);
 
