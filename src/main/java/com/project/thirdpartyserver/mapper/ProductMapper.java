@@ -19,7 +19,7 @@ public class ProductMapper {
         for (FakestoreProductDTO fakestoreProduct : fakestoreProductList) {
             ProductDTO productDTO = ProductDTO.builder()
                     .id((long) fakestoreProduct.getId())
-                    .price(fakestoreProduct.getPrice())
+                    .price((double)fakestoreProduct.getPrice())
                     .name(fakestoreProduct.getTitle())
                     .categoryId(-1L) // Fakestore does not provide category ID in the product list
                     .build();
@@ -73,7 +73,7 @@ public class ProductMapper {
 
         return ProductDTO.builder()
                 .id((long) product.getId())
-                .price(product.getPrice())
+                .price((double)product.getPrice())
                 .name(product.getTitle())
                 .categoryId(-1L) // Fakestore does not provide category ID in the product details
                 .build();

@@ -4,6 +4,7 @@ import com.project.thirdpartyserver.dto.AllProductsOfCategoryDTO;
 import com.project.thirdpartyserver.dto.CategoryDTO;
 import com.project.thirdpartyserver.exception.CategoryNotFoundException;
 import com.project.thirdpartyserver.service.ICategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
         if (categoryDTO == null || categoryDTO.getName() == null) {
             return ResponseEntity.badRequest().build();
         }

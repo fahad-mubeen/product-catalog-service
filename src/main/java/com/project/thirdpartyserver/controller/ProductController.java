@@ -3,6 +3,7 @@ package com.project.thirdpartyserver.controller;
 import com.project.thirdpartyserver.dto.ProductDTO;
 import com.project.thirdpartyserver.dto.ProductWithCategory_DTO;
 import com.project.thirdpartyserver.service.IProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +52,7 @@ public class ProductController {
     }
 
     @PostMapping
-    ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) throws IOException {
+    ResponseEntity<ProductDTO> createProduct(@RequestBody @Valid ProductDTO productDTO) throws IOException {
         if (productDTO == null || productDTO.getName() == null || productDTO.getCategoryId() == null) {
             return ResponseEntity.badRequest().build();
         }
