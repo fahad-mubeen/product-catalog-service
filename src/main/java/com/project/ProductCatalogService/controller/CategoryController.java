@@ -49,4 +49,39 @@ public class CategoryController {
         CategoryDTO createdCategory = this.categoryService.createCategory(categoryDTO);
         return ResponseEntity.status(201).body(createdCategory);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody @Valid CategoryDTO categoryDTO) {
+        CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
+        return ResponseEntity.ok(updatedCategory);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CategoryDTO>> searchCategoriesByName(@RequestParam String name) {
+        List<CategoryDTO> categoryDTO = categoryService.searchCategoriesByName(name);
+        return ResponseEntity.ok(categoryDTO);
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<CategoryDTO> getCategoryByName(@RequestParam String name) {
+        CategoryDTO categoryDTO = categoryService.findByName(name);
+        return ResponseEntity.ok(categoryDTO);
+    }
+
+    @GetMapping("/exists/{id}")
+    public ResponseEntity<Boolean> existsById(@PathVariable Long id) {
+        return ResponseEntity.ok(categoryService.existsById(id));
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<CategoryDTO> deleteCategoryById(@PathVariable Long id) {
+        CategoryDTO deletedCategory = categoryService.deleteCategoryById(id);
+        return ResponseEntity.ok(deletedCategory);
+    }
+
+    @DeleteMapping("/name/{name}")
+    public ResponseEntity<CategoryDTO> deleteCategoryByName(@PathVariable String name) {
+        CategoryDTO deletedCategory = categoryService.deleteCategoryByName(name);
+        return ResponseEntity.ok(deletedCategory);
+    }
 }

@@ -15,6 +15,6 @@ public class GlobalExceptionHandler {
                 java.time.LocalDateTime.now()
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + " - Please check the category ID.");
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
