@@ -1,0 +1,16 @@
+package com.project.ProductCatalogService.dto;
+
+import lombok.*;
+
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class FakestoreAllProductWrapperDTO {
+    private String status;
+    private String message;
+    private List<FakestoreProductDTO> products;
+}
