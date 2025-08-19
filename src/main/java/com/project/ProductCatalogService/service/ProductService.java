@@ -64,4 +64,26 @@ public class ProductService implements IProductService {
                 .categoryDTO(categoryDTO)
                 .build();
     }
+
+    @Override
+    public List<ProductDTO> getProductsLessThanEqualPrice(double price) {
+        if(price < 0){
+            return List.of();
+        }
+        List<Product> products = productRepository.getProductsLessThanEqualPrice(price);
+        return ProductMapper.mapToProductDTOList(products);
+    }
+
+    @Override
+    public Integer countProductsLessThanEqualPrice(double price) {
+        if(price < 0){
+            return 0;
+        }
+        return productRepository.countProductsLessThanEqualPrice(price);
+    }
+
+    @Override
+    public Integer countProductsBetweenPrice(double low, double high) {
+        return productRepository.countProductsBetweenPrice(low, high);
+    }
 }

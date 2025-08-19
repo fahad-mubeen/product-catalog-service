@@ -14,4 +14,10 @@ public interface IProductService {
     ProductDTO createProduct(ProductDTO productDTO) throws IOException;
 
     ProductWithCategory_DTO getProductWithCategoryById(Long id) throws IOException;
+
+    List<ProductDTO> getProductsLessThanEqualPrice(double price);
+
+    Integer countProductsLessThanEqualPrice(double price);
+
+    Integer countProductsBetweenPrice(double low, double high);
 }

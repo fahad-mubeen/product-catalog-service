@@ -63,7 +63,7 @@ public class CategoryController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<CategoryDTO> getCategoryByName(@RequestParam String name) {
+    public ResponseEntity<CategoryDTO> getCategoryByName(@RequestParam("categoryname") String name) {
         CategoryDTO categoryDTO = categoryService.findByName(name);
         return ResponseEntity.ok(categoryDTO);
     }

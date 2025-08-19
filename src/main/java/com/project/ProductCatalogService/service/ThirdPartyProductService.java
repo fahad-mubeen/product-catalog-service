@@ -36,4 +36,19 @@ public class ThirdPartyProductService implements IProductService {
     public ProductWithCategory_DTO getProductWithCategoryById(Long id) throws IOException {
         return null;
     }
+
+    @Override
+    public List<ProductDTO> getProductsLessThanEqualPrice(double price) {
+        return List.of();
+    }
+
+    @Override
+    public Integer countProductsLessThanEqualPrice(double price) {
+        return 0;
+    }
+
+    @Override
+    public Integer countProductsBetweenPrice(double low, double high) {
+        return 0;
+    }
 }

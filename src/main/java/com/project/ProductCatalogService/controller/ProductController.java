@@ -60,4 +60,23 @@ public class ProductController {
         ProductDTO createdProduct = this.productService.createProduct(productDTO);
         return ResponseEntity.status(201).body(createdProduct);
     }
+
+    @GetMapping("/price-range")
+    ResponseEntity<List<ProductDTO>> getProductsLessThanEqualPrice(@RequestParam("price") double price){
+        return ResponseEntity.ok(this.productService.getProductsLessThanEqualPrice(price));
+    }
+
+    @GetMapping("/count/price-range")
+    ResponseEntity<Integer> countProductsLessThanEqualPrice(@RequestParam("price") double price) {
+        int count = this.productService.countProductsLessThanEqualPrice(price);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/price-range/between")
+    ResponseEntity<Integer> countProductsBetweenPrice(@RequestParam("low") double low, @RequestParam("high") double high) {
+        if(low > high){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(this.productService.countProductsBetweenPrice(low, high));
+    }
 }
